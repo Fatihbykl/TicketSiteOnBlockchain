@@ -2,8 +2,10 @@ import React, {Component} from 'react';
 import '../css/ticket.css';
 
 class TicketCard extends Component {
+
+
     render() {
-        const {id, ticketCount, price, date, name, location, description, isActive} = this.props;
+        const {func, id, ticketCount, price, date, name, location, description, isActive} = this.props;
         return(
             <div className="col-md-6">
                 <article class="card fl-left">
@@ -28,7 +30,7 @@ class TicketCard extends Component {
                             {description}
                         </p>
                         </div>
-                        <a href="google.com">BUY - {price}$</a>
+                        <button onClick={func.bind(this, id, price)}>BUY - {price}$</button>
                     </section>
                 </article>
             </div>
