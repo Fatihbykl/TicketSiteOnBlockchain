@@ -26,8 +26,9 @@ class CreateEvent extends Component {
 
     render() {
         return (
-            <div>
-                <form className="col-md-6 m-auto mt-5" onSubmit={this.handleSubmit}>
+            <div className="container">
+                <h1>Create Event</h1>
+                <form className="m-auto mt-5" onSubmit={this.handleSubmit}>
                     <div class="form-group mt-3">
                         <label for="EventName">Event Name</label>
                         <input type="text" name="name" class="form-control" id="EventName" aria-describedby="emailHelp" onChange={this.handleForm} />

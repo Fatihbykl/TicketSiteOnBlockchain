@@ -4,8 +4,9 @@ import Web3 from 'web3';
 import logo from './logo.svg';
 import Ticket from "./abis/Ticket.json";
 import './App.css';
-import Homepage from './components/Homepage'
+import Homepage from './components/Homepage';
 import CreateEvent from './components/CreateEvent';
+import MyTickets from './components/MyTickets';
 
 class App extends Component {
 
@@ -15,7 +16,8 @@ class App extends Component {
       account: null,
       ticket: null,
       web3: null,
-      events: []
+      events: [],
+      myevents: []
     }
     this.loadBlockchainData = this.loadBlockchainData.bind(this);
     this.createEvent = this.createEvent.bind(this);
@@ -24,6 +26,8 @@ class App extends Component {
     this.hexToString = this.hexToString.bind(this);
     this.buyTicket = this.buyTicket.bind(this);
     this.withdraw = this.withdraw.bind(this);
+    this.getUserEvents = this.getUserEvents.bind(this);
+    this.findEvent = this.findEvent.bind(this);
   }
 
   async componentWillMount() {
@@ -62,6 +66,7 @@ class App extends Component {
       window.alert('Please install MetaMask')
     }
     this.getEvents();
+    this.getUserEvents();
   }
 
   stringToHex(data) {
@@ -95,9 +100,7 @@ class App extends Component {
   async getEvents() {
     try {
       const events = await this.state.ticket.methods.GetEvents().call({from: this.state.account});
-      
       this.setState({events: events});
-      console.log(events);
     } catch (e) {
       console.log('error: get events ->', e);
     }
@@ -120,17 +123,47 @@ class App extends Component {
     }
   }
 
+  findEvent(id){
+    try {
+      const event = this.state.ticket.methods.GetEvent(id).call({from: this.state.account});
+      return event;
+    } catch (e) {
+      console.log('error: find event ->', e);
+    }
+  }
+
+  async getUserEvents() {
+    try {
+      var myevents = [];
+      const events = await this.state.ticket.methods.GetUserEvents(this.state.account).call({from: this.state.account});
+      events.map(id => {
+        return(
+          myevents.push(this.findEvent(id))
+        );
+      })
+      Promise.all(myevents).then(result => {
+        this.setState({myevents: result});
+      })
+    } catch (e) {
+      console.log('error: get user events ->', e);
+    }
+  }
+
 
   render(){
     const events = this.state.events;
+    const myevents = this.state.myevents;
     return (
       <Router>
         <Switch>
+          <Route path="/myevents" >
+            <MyTickets events={myevents} buyTicket={this.buyTicket} hexToString={this.hexToString} />
+          </Route>
           <Route path="/create-event">
             <CreateEvent createEvent={this.createEvent} />
           </Route>
           <Route path="/" >
-            <Homepage events={events} createEvent={this.createEvent} buyTicket={this.buyTicket} hexToString={this.hexToString} />
+            <Homepage events={events} buyTicket={this.buyTicket} hexToString={this.hexToString} />
           </Route>
         </Switch>
       </Router>
