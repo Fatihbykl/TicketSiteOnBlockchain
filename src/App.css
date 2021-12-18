@@ -36,3 +36,33 @@
     transform: rotate(360deg);
   }
 }
+
+.containerNavbar {
+  margin: 0 auto !important;
+  display: block !important;
+}
+
+.a-link {
+  text-decoration: none;
+  color: #5d686e;
+}
+
+.a-link:hover {
+  transition-duration: .4s;
+}
+
+.a-selected {
+  color: #0869ae;
+}
+
+.navbarButton {
+  background-color: #5d686e;
+  color: white;
+  padding: 5px 10px 5px 10px;
+  border-radius: 5px;
+}
+
+.navbarButton:hover {
+  background-color: #0869ae;
+  transition-duration: .4s;
+}

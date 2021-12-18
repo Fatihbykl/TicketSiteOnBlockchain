@@ -34,162 +34,243 @@ h1
 
 .row{overflow: hidden}
 
-.card
-{
-  display: table-row;
+.page-title {
+  text-align: center;
+  color: #FFFFFF;
+  font-weight: 100;
+  font-size: 40px;
+  margin-top: 60px;
+  margin-bottom: 40px;
+}
+
+.wrapper {
   width: 100%;
-  background-color: #fff;
-  color: #989898;
-  margin-bottom: 10px;
-  font-family: 'Oswald', sans-serif;
-  text-transform: uppercase;
-  border-radius: 4px;
-  position: relative
-}
-
-.card + .card{margin-left: 2%}
-
-.date
-{
-  display: table-cell;
-  width: 35%;
+  min-height: 930px;
+  display: block;
   position: relative;
-  text-align: center;
-  border-right: 2px dashed #dadde6
+  background: #333333;
+  background-image: url("https://images.unsplash.com/photo-1448485780098-7e0b78781fc1?crop=entropy&dpr=2&fit=crop&fm=jpg&h=750&ixjsv=2.1.0&ixlib=rb-0.3.5&q=50&w=1450");
+  background-size: cover;
+  background-position: center center;
+  position: relative;
+  padding-bottom: 50px;
 }
-
-.date:before,
-.date:after
-{
+.wrapper:after {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #111111;
+  display: block;
   content: "";
-  display: block;
-  width: 30px;
-  height: 30px;
-  background-color: #DADDE6;
-  position: absolute;
-  top: -15px ;
-  right: -15px;
+  top: 0;
+  left: 0;
   z-index: 1;
-  border-radius: 50%
+  opacity: 0.6;
 }
-
-.date:after
-{
-  top: auto;
-  bottom: -15px
+.container {
+  z-index: 2;
+  position: relative;
 }
-
-.date time
-{
-  display: block;
+footer {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  -webkit-transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%)
-}
-
-.date time span{display: block}
-
-.date time span:first-child
-{
-  color: #2b2b2b;
-  font-weight: 600;
-  font-size: 250%
-}
-
-.date time span:last-child
-{
-  text-transform: uppercase;
-  font-weight: 600;
-  margin-top: -10px
-}
-
-.card-cont
-{
-  display: table-cell;
-  width: 75%;
-  font-size: 85%;
-  padding: 10px 10px 30px 50px
-}
-
-.card-cont h3
-{
-  color: #3C3C3C;
-  font-size: 130%
-}
-
-.card-cont > div
-{
-  display: table-row
-}
-
-.card-cont .even-date i,
-.card-cont .even-info i,
-.card-cont .even-date time,
-.card-cont .even-info p
-{
-  display: table-cell
-}
-
-.card-cont .even-date i,
-.card-cont .even-info i
-{
-  padding: 5% 5% 0 0
-}
-
-.card-cont .even-info p
-{
-  padding: 30px 50px 0 0
-}
-
-.card-cont .even-date time span
-{
-  display: block
-}
-
-.card-cont button
-{
-  display: block;
-  text-decoration: none;
-  width: 80px;
-  height: 30px;
-  background-color: #D8DDE0;
-  color: #fff;
+  z-index: 3;
+  bottom: 20px;
+  width: 100%;
   text-align: center;
-  line-height: 30px;
-  border-radius: 2px;
+}
+footer h3 {
+  color: #FFFFFF;
+  font-weight: 200;
+}
+footer .social-icon {
+  color: #FFFFFF;
+  opacity: 0.8;
+  font-size: 34px;
+  margin: 20px;
+}
+footer .social-icon:hover {
+  opacity: 1;
+}
+
+.ticket-card {
+  margin-top: 15vh;
+  margin-bottom: 15vh;
+  background: #FFFFFF;
+  border-radius: 4px;
+}
+.ticket-card:hover .cover img, .ticket-card.active .cover img {
+  -moz-transform: translate(0, -50px);
+  -o-transform: translate(0, -50px);
+  -ms-transform: translate(0, -50px);
+  -webkit-transform: translate(0, -50px);
+  transform: translate(0, -50px);
+  box-shadow: 0 10px 20px -4px rgba(22, 22, 22, 0.5);
+}
+.ticket-card .cover {
+  border-radius: 4px 4px 0 0;
+  position: relative;
+  margin: 15px;
+}
+.ticket-card .cover img {
+  width: 100%;
+  position: relative;
+  z-index: 2;
+  margin-top: -30px;
+  box-shadow: 0 10px 16px -6px rgba(22, 22, 22, 0.5);
+  border-radius: 4px;
+  -moz-transform: translate(0, 0);
+  -o-transform: translate(0, 0);
+  -ms-transform: translate(0, 0);
+  -webkit-transform: translate(0, 0);
+  transform: translate(0, 0);
+  -webkit-transition: transform 300ms cubic-bezier(0.34, 2, 0.6, 1), box-shadow 300ms ease, opacity 300ms ease;
+  -moz-transition: transform 300ms cubic-bezier(0.34, 2, 0.6, 1), box-shadow 300ms ease, opacity 300ms ease;
+  -o-transition: transform 300ms cubic-bezier(0.34, 2, 0.6, 1), box-shadow 300ms ease, opacity 300ms ease;
+  -ms-transition: transform 300ms cubic-bezier(0.34, 2, 0.6, 1), box-shadow 300ms ease, opacity 300ms ease;
+  transition: transform 300ms cubic-bezier(0.34, 2, 0.6, 1), box-shadow 300ms ease, opacity 300ms ease;
+}
+.ticket-card .cover .info {
   position: absolute;
-  right: 10px;
-  bottom: 10px
+  width: 100%;
+  bottom: 0px;
+  padding: 0 15px;
+  color: #777777;
 }
-
-.row:last-child .card:first-child .card-cont a
-{
-  background-color: #037FDD
+.ticket-card .cover .info .going,
+.ticket-card .cover .info .tickets-left {
+  padding-bottom: 10px;
+  border-bottom: 1px solid #f3f3f3;
+  width: 50%;
 }
-
-.row:last-child .card:last-child .card-cont a
-{
-  background-color: #F8504C
+.ticket-card .cover .info .going {
+  float: left;
 }
-
-@media screen and (max-width: 860px)
-{
-  .card
-  {
-    display: block;
-    float: none;
-    width: 100%;
-    margin-bottom: 10px
-  }
-  
-  .card + .card{margin-left: 0}
-  
-  .card-cont .even-date,
-  .card-cont .even-info
-  {
-    font-size: 75%
-  }
+.ticket-card .cover .info .tickets-left {
+  float: right;
+  text-align: right;
+}
+.ticket-card .cover .info .fa {
+  color: #CCCCCC;
+  margin-right: 5px;
+}
+.ticket-card .artist {
+  float: left;
+}
+.ticket-card .artist .info {
+  font-weigth: 600;
+  font-size: 12px;
+  text-transform: uppercase;
+  color: #BBBBBB;
+  margin-bottom: 0;
+}
+.ticket-card .artist .name {
+  font-weight: 200;
+  font-size: 22px;
+  margin-top: 5px;
+}
+.ticket-card .ticket {
+  float: left;
+}
+.ticket-card .ticket small {
+  font-size: 75%;
+}
+.ticket-card .price {
+  float: right;
+  text-align: right;
+}
+.ticket-card .price .from {
+  color: #BBBBBB;
+}
+.ticket-card .price .value {
+  font-size: 28px;
+  font-weight: 200;
+  color: #00bbff;
+  margin-top: -5px;
+}
+.ticket-card .price .value b {
+  font-size: 18px;
+  font-weight: 200;
+}
+.ticket-card .list-unstyled {
+  max-height: 200px;
+  overflow-x: scroll;
+  background: #EEEEEE;
+  margin-bottom: 0;
+  box-shadow: inset 0px 4px 10px rgba(0, 0, 0, 0.25);
+}
+.ticket-card .list-unstyled li {
+  border-bottom: 1px dotted #CCCCCC;
+  padding: 5px 30px;
+  overflow: hidden;
+  width: 100%;
+  display: block;
+  position: relative;
+}
+.ticket-card .list-unstyled li .btn-buy {
+  position: absolute;
+  right: 15px;
+  top: 13px;
+  padding: 8px 20px;
+  border-radius: 6px;
+  background: #00bbff;
+  border: 0;
+  opacity: 0;
+  -webkit-transition: transform 300ms cubic-bezier(0.34, 2, 0.6, 1), box-shadow 300ms ease, opacity 300ms ease;
+  -moz-transition: transform 300ms cubic-bezier(0.34, 2, 0.6, 1), box-shadow 300ms ease, opacity 300ms ease;
+  -o-transition: transform 300ms cubic-bezier(0.34, 2, 0.6, 1), box-shadow 300ms ease, opacity 300ms ease;
+  -ms-transition: transform 300ms cubic-bezier(0.34, 2, 0.6, 1), box-shadow 300ms ease, opacity 300ms ease;
+  transition: transform 300ms cubic-bezier(0.34, 2, 0.6, 1), box-shadow 300ms ease, opacity 300ms ease;
+}
+.ticket-card .list-unstyled li:hover .btn-buy {
+  opacity: 1;
+}
+.ticket-card .list-unstyled li:last-child {
+  border-bottom: none;
+}
+.ticket-card .list-unstyled li:before, .ticket-card .list-unstyled li:after {
+  display: table;
+  content: " ";
+  clear: both;
+}
+.ticket-card .list-unstyled li .price .value {
+  color: #444444;
+  font-size: 22px;
+  margin-top: 10px;
+}
+.ticket-card .body {
+  padding: 5px 30px;
+}
+.ticket-card .body .info {
+  color: #777777;
+}
+.ticket-card .body .location,
+.ticket-card .body .date {
+  padding-top: 10px;
+  width: 50%;
+}
+.ticket-card .body .location {
+  float: left;
+}
+.ticket-card .body .date {
+  float: right;
+  text-align: right;
+}
+.ticket-card .body .fa {
+  color: #CCCCCC;
+  margin-right: 5px;
+}
+.ticket-card .footer .btn {
+  width: 100%;
+  background: transparent;
+  border-top: 1px dotted #BBBBBB;
+  border-radius: 0;
+  padding: 15px 8px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #666666;
+  box-shadow: none;
+}
+.ticket-card .footer .btn:focus, .ticket-card .footer .btn:hover, .ticket-card .footer .btn:active {
+  outline: none !important;
 }

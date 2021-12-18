@@ -7,6 +7,7 @@ import './App.css';
 import Homepage from './components/Homepage';
 import CreateEvent from './components/CreateEvent';
 import MyTickets from './components/MyTickets';
+import Navbar from './components/Navbar';
 
 class App extends Component {
 
@@ -17,7 +18,8 @@ class App extends Component {
       ticket: null,
       web3: null,
       events: [],
-      myevents: []
+      myevents: [],
+      render: 0,
     }
     this.loadBlockchainData = this.loadBlockchainData.bind(this);
     this.createEvent = this.createEvent.bind(this);
@@ -28,30 +30,36 @@ class App extends Component {
     this.withdraw = this.withdraw.bind(this);
     this.getUserEvents = this.getUserEvents.bind(this);
     this.findEvent = this.findEvent.bind(this);
+    this.rerender = this.rerender.bind(this);
   }
 
-  async componentWillMount() {
+  async componentDidMount() {
     await this.loadBlockchainData(this.props.dispatch)
+  }
+/*
+  shouldComponentUpdate(nextProps, nextState) {
+    return this.state.render != nextState.render;
+  }*/
+
+  rerender() {
+    this.getEvents();
+    this.getUserEvents();
+    this.setState({render: this.state.render + 1});
   }
 
   async loadBlockchainData(dispatch) {
-
     if(typeof window.ethereum!=='undefined'){
-      /*
-      const provider = new Web3.providers.HttpProvider('http://localhost:9545/');
-      const web3 = new Web3(provider);*/
-      
-      const web3 = new Web3(window.ethereum)
+      let web3 = new Web3(window.ethereum)
       window.ethereum.enable();
       const netId = await web3.eth.net.getId()
       const accounts = await web3.eth.getAccounts()
-
       //load balance
       if(typeof accounts[0] !=='undefined'){
         const balance = await web3.eth.getBalance(accounts[0])
         this.setState({account: accounts[0], web3: web3})
       } else {
-        window.alert('Please login with MetaMask')
+        window.alert('Please login with MetaMask');
+        web3 = require('web3');
       }
       //load contracts
       try {
@@ -85,12 +93,16 @@ class App extends Component {
       datee,
       name,
       location,
+      city,
       description,
+      category,
       isActive
     ) {
       try{
-        console.log(ticketCount, price,datee,name, location, description, isActive);
-        await this.state.ticket.methods.CreateEvent(ticketCount, price, this.stringToHex(datee), this.stringToHex(name), this.stringToHex(location), this.stringToHex(description), isActive).send({from: this.state.account, gas:3000000});
+        console.log(ticketCount, price,datee,name, location, description, isActive, category);
+        const priceWei = this.state.web3.utils.toWei(price.toString(), "ether");
+        await this.state.ticket.methods.CreateEvent(ticketCount, priceWei, this.stringToHex(datee), this.stringToHex(name), this.stringToHex(location), this.stringToHex(city), this.stringToHex(description), this.stringToHex(category), isActive).send({from: this.state.account, gas:3000000});
+        this.rerender();
       }
       catch(e) {
         console.log('error: create event ->', e);
@@ -108,8 +120,8 @@ class App extends Component {
 
   async buyTicket(id, amount){
     try {
-      const amountToSend = this.state.web3.utils.toWei(amount, "ether");
-      await this.state.ticket.methods.BuyTicket(id).send({from: this.state.account, value: amountToSend});
+      await this.state.ticket.methods.BuyTicket(id).send({from: this.state.account, value: amount});
+      this.rerender();
     } catch (e) {
       console.log('error: buy ticket ->', e);
     }
@@ -153,20 +165,22 @@ class App extends Component {
   render(){
     const events = this.state.events;
     const myevents = this.state.myevents;
+    console.log("Render Çalıştı!!!");
     return (
-      <Router>
-        <Switch>
-          <Route path="/myevents" >
-            <MyTickets events={myevents} buyTicket={this.buyTicket} hexToString={this.hexToString} />
-          </Route>
-          <Route path="/create-event">
-            <CreateEvent createEvent={this.createEvent} />
-          </Route>
-          <Route path="/" >
-            <Homepage events={events} buyTicket={this.buyTicket} hexToString={this.hexToString} />
-          </Route>
-        </Switch>
-      </Router>
+        <Router>
+          <Navbar account={this.state.account} loadData={this.loadBlockchainData} render={this.rerender} />
+          <Switch>
+            <Route path="/myevents" >
+              <MyTickets events={myevents} buyTicket={this.buyTicket} hexToString={this.hexToString} />
+            </Route>
+            <Route path="/create-event">
+              <CreateEvent createEvent={this.createEvent} />
+            </Route>
+            <Route path="/" >
+              <Homepage events={events} buyTicket={this.buyTicket} hexToString={this.hexToString} />
+            </Route>
+          </Switch>
+        </Router>
     );
   }
 }
