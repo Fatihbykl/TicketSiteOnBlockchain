@@ -8,6 +8,7 @@ import Homepage from './components/Homepage';
 import CreateEvent from './components/CreateEvent';
 import MyTickets from './components/MyTickets';
 import Navbar from './components/Navbar';
+import AdminSettings from './components/AdminSettings';
 
 class App extends Component {
 
@@ -19,6 +20,8 @@ class App extends Component {
       web3: null,
       events: [],
       myevents: [],
+      owners: [],
+      isowner: false,
       render: 0,
     }
     this.loadBlockchainData = this.loadBlockchainData.bind(this);
@@ -31,6 +34,10 @@ class App extends Component {
     this.getUserEvents = this.getUserEvents.bind(this);
     this.findEvent = this.findEvent.bind(this);
     this.rerender = this.rerender.bind(this);
+    this.checkOwner = this.checkOwner.bind(this);
+    this.getOwners = this.getOwners.bind(this);
+    this.addOwner = this.addOwner.bind(this);
+    this.deleteOwner = this.deleteOwner.bind(this);
   }
 
   async componentDidMount() {
@@ -59,7 +66,7 @@ class App extends Component {
         this.setState({account: accounts[0], web3: web3})
       } else {
         window.alert('Please login with MetaMask');
-        web3 = require('web3');
+        web3 = require('web3');// cüzdan bağlamadan etkinlikleri görebilmeli
       }
       //load contracts
       try {
@@ -75,6 +82,8 @@ class App extends Component {
     }
     this.getEvents();
     this.getUserEvents();
+    this.getOwners();
+    this.checkOwner(this.state.account);
   }
 
   stringToHex(data) {
@@ -161,6 +170,41 @@ class App extends Component {
     }
   }
 
+  async checkOwner(address) {
+    try {
+      const result = await this.state.ticket.methods.IsOwner(address).call({from: this.state.account});
+      Promise.resolve(result).then(r => {
+        this.setState({isowner: r});
+      })
+    } catch (error) {
+      console.log("error: check owner ->" , error);
+    }
+  }
+
+  async getOwners() {
+    try {
+      const result = await this.state.ticket.methods.GetOwners().call({from: this.state.account});
+      this.setState({owners: result});
+    } catch (error) {
+      console.log("error: get owenrs ->", error);
+    }
+  }
+
+  async addOwner(address) {
+    try {
+      await this.state.ticket.methods.AddOwner(address).send({from: this.state.account});
+    } catch (error) {
+      console.log("error: add owner ->", error);
+    }
+  }
+
+  async deleteOwner(address, index) {
+    try {
+      await this.state.ticket.methods.DeleteOwner(address, index).send({from: this.state.account});
+    } catch (error) {
+      console.log("error: add owner ->", error);
+    }
+  }
 
   render(){
     const events = this.state.events;
@@ -168,13 +212,16 @@ class App extends Component {
     console.log("Render Çalıştı!!!");
     return (
         <Router>
-          <Navbar account={this.state.account} loadData={this.loadBlockchainData} render={this.rerender} />
+          <Navbar account={this.state.account} loadData={this.loadBlockchainData} render={this.rerender} isOwner={this.state.isowner} />
           <Switch>
             <Route path="/myevents" >
               <MyTickets events={myevents} buyTicket={this.buyTicket} hexToString={this.hexToString} />
             </Route>
             <Route path="/create-event">
               <CreateEvent createEvent={this.createEvent} />
+            </Route>
+            <Route path="/admin-settings">
+              <AdminSettings owners={this.state.owners} addOwner={this.addOwner} deleteOwner={this.deleteOwner} />
             </Route>
             <Route path="/" >
               <Homepage events={events} buyTicket={this.buyTicket} hexToString={this.hexToString} />

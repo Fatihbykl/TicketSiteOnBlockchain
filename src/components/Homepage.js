@@ -7,7 +7,6 @@ class Homepage extends Component {
         const {events, buyTicket, hexToString} = this.props;
         return(
             <div className="container">
-                <h1>Etkinlikler</h1>
                 <div className="row">
                     {
                         events.map(event => {

@@ -30,7 +30,7 @@ class CreateEvent extends Component {
     render() {
         return (
             <div className="container">
-                <form onSubmit={this.handleSubmit}>
+                <form onSubmit={this.handleSubmit} style={{padding: 0}}>
                     <div class="form-group">
                         <h2 class="heading">Event Details</h2>
                         <div class="controls">
@@ -72,48 +72,8 @@ class CreateEvent extends Component {
                             </div>
                             <button type="submit" value="Submit" class="col-1-4 buttonForm float-end">Submit</button>
                         </div>  
-                        
                     </div>
-                    </form>
-
-                {/*
-                <h1>Create Event</h1>
-                <form className="m-auto mt-5" onSubmit={this.handleSubmit}>
-                    <div class="form-group mt-3">
-                        <label for="EventName">Etkinlik Adı</label>
-                        <input type="text" name="name" class="form-control" id="EventName" aria-describedby="emailHelp" onChange={this.handleForm} />
-                    </div>
-                    <div class="form-group mt-3">
-                        <label for="date">Tarih</label>
-                        <input type="date" name="date" class="form-control" id="date" onChange={this.handleForm} />
-                        <small class="form-text text-muted">Etkinlik ne zaman?</small>
-                    </div>
-                    <div class="form-group mt-3">
-                        <label for="loc">Yer</label>
-                        <input type="text" name="location" class="form-control" id="loc" onChange={this.handleForm} />
-                        <small class="form-text text-muted">Etkinlik nerede?</small>
-                    </div>
-                    <div class="form-group mt-3">
-                        <label for="desc">Açıklama</label>
-                        <input type="text" name="description" class="form-control" id="desc" onChange={this.handleForm} />
-                        <small class="form-text text-muted">Etkinlik hakkında bilgi</small>
-
-                    </div>
-                    <div class="form-group mt-3">
-                        <label for="tcount">Bilet Sayısı</label>
-                        <input type="number" name="ticketCount" class="form-control" id="tcount" min="1" onChange={this.handleForm} />
-                        <small class="form-text text-muted">Maksimum bilet sayısı</small>
-
-                    </div>
-                    <div class="form-group mt-3">
-                        <label for="price">Fiyat</label>
-                        <input type="number" name="price" class="form-control" id="price" step="0.0001" onChange={this.handleForm} />
-                        <small class="form-text text-muted">Bilet kaç ETH?</small>
-
-                    </div>
-                    <button type="submit" class="btn btn-primary mt-3 float-end">Oluştur</button>
                 </form>
-                */}
             </div>
         )
     }
