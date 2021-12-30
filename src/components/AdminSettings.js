@@ -9,6 +9,7 @@ class AdminSettings extends Component {
             index: 0,
             address1: '',
             address2: '',
+            postId: 0,
         }
     }
 
@@ -28,6 +29,16 @@ class AdminSettings extends Component {
         event.preventDefault();
     }
 
+    changezIndex(id) {
+        let array = ['owners', 'owner', 'event']
+        for (let index = 0; index < array.length; index++) {
+            if (array[index] == id) {
+                document.getElementById(id).style.zIndex = 1;
+            }else{
+                document.getElementById(array[index]).style.zIndex = 0;
+            }
+        }
+    }
     render() {
         const { owners } = this.props;
         return(
@@ -38,14 +49,14 @@ class AdminSettings extends Component {
                     <a href=""></a>
                     </div>
                     <ul>
-                        <li><a href="#owners">Owners</a></li>
-                        <li><a href="#owner" id="targeted">Owner Settings</a></li>
-                        <li><a href="#event">Event Settings</a></li>
+                        <li><a href="#owners" onClick={() => {this.changezIndex("owners")}}>Owners</a></li>
+                        <li><a href="#owner" id="targeted" onClick={() => {this.changezIndex("owner")}}>Owner Settings</a></li>
+                        <li><a href="#event" onClick={() => {this.changezIndex("event")}}>Event Settings</a></li>
                     </ul>
                 </div>
                 <div class="main">
                     <div class="mainContent clearfix">
-                        <div id="owners">
+                        <div id="owners" style={{height: '100%'}}>
                             <h2 class="heading">Owners</h2>
                             <div style={{padding: "0 20px"}}>
                                 <table id="addresses">
@@ -66,7 +77,7 @@ class AdminSettings extends Component {
                                 </table>
                             </div>
                         </div>
-                        <div id="owner">
+                        <div id="owner" style={{height: '100%'}}>
                             <h2 class="heading">Add Owner</h2>
                             <div>
                                 <form onSubmit={this.handleSubmitAddOwner} style={{padding: "0 20px"}}>
@@ -91,8 +102,18 @@ class AdminSettings extends Component {
                                 </div>
                             </form>
                         </div>
-                        <div id="event">
-                            <h2 class="header">posts</h2>
+                        <div id="event" style={{height: '100%'}}>
+                            <h2 class="heading">Edit Post</h2>
+                            <div>
+                                <form onSubmit={this.handleSubmitAddOwner} style={{padding: "0 20px"}}>
+                                    <div class="form-group mb-5">
+                                        <div class="controls">
+                                            <input type="text" name="postId" class="floatLabel" placeholder='Post id' onChange={this.handleForm}/>
+                                        </div>
+                                        <button type="submit" value="Submit" class="col-1-4 buttonForm float-end" onClick={() => {window.location.href = '/edit-event/' + this.state.postId}}>Edit</button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>

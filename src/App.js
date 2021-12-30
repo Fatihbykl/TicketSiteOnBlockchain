@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import Web3 from 'web3';
-import logo from './logo.svg';
 import Ticket from "./abis/Ticket.json";
 import './App.css';
 import Homepage from './components/Homepage';
@@ -9,6 +8,8 @@ import CreateEvent from './components/CreateEvent';
 import MyTickets from './components/MyTickets';
 import Navbar from './components/Navbar';
 import AdminSettings from './components/AdminSettings';
+import EventDetails from './components/EventDetails';
+import EditEvents from './components/EditEvents';
 
 class App extends Component {
 
@@ -38,6 +39,7 @@ class App extends Component {
     this.getOwners = this.getOwners.bind(this);
     this.addOwner = this.addOwner.bind(this);
     this.deleteOwner = this.deleteOwner.bind(this);
+    this.editEvent = this.editEvent.bind(this);
   }
 
   async componentDidMount() {
@@ -62,7 +64,7 @@ class App extends Component {
       const accounts = await web3.eth.getAccounts()
       //load balance
       if(typeof accounts[0] !=='undefined'){
-        const balance = await web3.eth.getBalance(accounts[0])
+        //const balance = await web3.eth.getBalance(accounts[0])
         this.setState({account: accounts[0], web3: web3})
       } else {
         window.alert('Please login with MetaMask');
@@ -115,6 +117,29 @@ class App extends Component {
       }
       catch(e) {
         console.log('error: create event ->', e);
+      }
+    }
+
+    async editEvent(
+      id,
+      ticketCount,
+      price,
+      datee,
+      name,
+      location,
+      city,
+      description,
+      category,
+      isActive
+    ) {
+      try{
+        console.log(ticketCount, price,datee,name, location, description, isActive, category);
+        const priceWei = this.state.web3.utils.toWei(price.toString(), "ether");
+        await this.state.ticket.methods.EditEvent(id, ticketCount, priceWei, this.stringToHex(datee), this.stringToHex(name), this.stringToHex(location), this.stringToHex(city), this.stringToHex(description), this.stringToHex(category), isActive).send({from: this.state.account, gas:3000000});
+        this.rerender();
+      }
+      catch(e) {
+        console.log('error: edit event ->', e);
       }
     }
 
@@ -220,16 +245,17 @@ class App extends Component {
             <Route path="/create-event">
               <CreateEvent createEvent={this.createEvent} />
             </Route>
+            <Route path="/edit-event/:id" render={(props) => (<EditEvents {...props} editEvent={this.editEvent} />)} />
             <Route path="/admin-settings">
               <AdminSettings owners={this.state.owners} addOwner={this.addOwner} deleteOwner={this.deleteOwner} />
             </Route>
+            <Route path="/event-details/:id" render={(props) => (<EventDetails {...props} findEvent={this.findEvent} hexToString={this.hexToString} buyTicket={this.buyTicket} />)} />
             <Route path="/" >
-              <Homepage events={events} buyTicket={this.buyTicket} hexToString={this.hexToString} />
+              <Homepage events={events} hexToString={this.hexToString} buyTicket={this.buyTicket} />
             </Route>
           </Switch>
         </Router>
     );
   }
 }
-
 export default App;

@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { Link } from 'react-router-dom';
 import '../css/ticket.css';
 import { FaEthereum, FaThList } from 'react-icons/fa'
 import { IoLocationSharp, IoCalendarSharp, IoTicketSharp } from 'react-icons/io5'
@@ -7,6 +8,7 @@ class TicketCard extends Component {
     render() {
         const web3 = require('web3');
         const {func, id, ticketCount, price, date, name, location, city, description, category, isActive} = this.props;
+        const link = '/event-details/' + id;
         return(
             <div className="col-lg-4 col-md-6">
                 <div class="ticket-card">
@@ -42,12 +44,11 @@ class TicketCard extends Component {
                         <i class="fa fa-calendar"></i><IoCalendarSharp /> {date}
                         </p>
                     </div>
-                    <div class="clearfix"></div>
+                        <div class="clearfix"></div>
                     </div>
-                    <div class="collapse">
-                    </div>
+                    <div class="collapse"></div>
                     <div class="footer">
-                    <button class="btn toggle-tickets">Detaylar</button>
+                        <a class="btn toggle-tickets" href={link}>Details</a>
                     </div>
                 </div>
             </div>

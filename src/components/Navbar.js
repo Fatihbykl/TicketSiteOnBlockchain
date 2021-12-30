@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import '../App.css';
 import '../css/form.css';
-import { NavLink, BrowserRouter as Router, Route } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { IoHome, IoTicketSharp } from 'react-icons/io5';
 import { IoMdSettings } from 'react-icons/io';
 import { AiOutlinePlusCircle } from 'react-icons/ai';
@@ -32,7 +32,7 @@ class Navbar extends Component {
                         {
                             account  
                             ? <a className='a-link'>{shortAddress}</a>
-                            : <button className="navbarButton" onClick={loadData}>Connect Wallet</button>
+                            : <button className="navbarButton float-end" onClick={loadData}>Connect Wallet</button>
                         }
                     </div>
                 </div>
