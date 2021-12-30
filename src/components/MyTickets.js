@@ -1,27 +1,71 @@
 import React, { Component } from "react";
-import TicketCard from "./TicketCard";
+import '../css/mytickets.css';
 
 class MyTickets extends Component {
     render() {
-        const {events, buyTicket, hexToString} = this.props;
+        const web3 = require('web3');
+        const {events, buyTicket, hexToString, contract} = this.props;
         return(
             <div className="container">
-                <h1>Biletlerim</h1>
+                <h2 class="heading">My Tickets</h2>
                 <div className="row">
-                    {
-                        events.map(event => {
-                            var [id, ticketCount, price, date, name, location, description, isActive] = [null, null, null, null, null, null, null, null];
-                            id = event['0'];
-                            ticketCount = event['1'];
-                            price = event['2'];
-                            date = event['3'];
-                            name = event['4'];
-                            location = event['5'];
-                            description = event['6'];
-                            isActive = event['7'];
-                            return <TicketCard key={id} func={buyTicket} id={id} ticketCount={ticketCount} price={price} date={hexToString(date)} name={hexToString(name)} location={hexToString(location)} description={hexToString(description)} isActive={isActive} />
-                        })
-                    }
+                    <div className="container ms-0 me-0 my-tickets-container" style={{width: '100%'}}>
+                        <div id="active-products" class="tabcontent">
+                            <div class="my-products-products">
+                                <div>
+                                    <table class="my-products-product-table">
+                                        <thead>
+                                            <tr>
+                                                <th class="table-checkbox-col"></th>
+                                                <th class="table-image-col"></th>
+                                                <th class="table-name-col">Name</th>
+                                                <th class="table-brand-col">Date</th>
+                                                <th class="table-category-col">Category</th>
+                                                <th class="table-stock-col">Price</th>
+                                                <th class="table-price-col">Info</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        {
+                                            events.map((event, index) => {
+                                                var [id, date, name, location, category, time, price, isActive] = [null, null, null, null, null, null, null, null];
+                                                id = event['0'];
+                                                date = hexToString(event['3']);
+                                                time = hexToString(event['7']);
+                                                price = web3.utils.fromWei(event[2].toString(), 'ether');
+                                                name = event['4'];
+                                                location = event['5'];
+                                                category = hexToString(event['6']);
+                                                isActive = event['10'];
+                                                return (
+                                                    
+                                                    <tr>
+                                                        <td class="table-checkbox-col">
+                                                            <span style={{fontSize: "16px"}}>{index + 1}</span>
+                                                        </td>
+                                                        <td class="table-image-col">
+                                                            <img src="https://picsum.photos/80/80" alt="" class="table-image" />
+                                                        </td>
+                                                        <td class="table-name-col">{hexToString(name)}</td>
+                                                        <td class="table-brand-col">{date} - {time}</td>
+                                                        <td class="table-category-col">{category}</td>
+                                                        <td class="table-stock-col"><span class="in-stock">{price} ETH</span></td>
+                                                        <td class="table-price-col">
+                                                            <button className="navbarButton" onClick={() => {window.location.href = "/event-details/" + id}}>Details</button>
+                                                        </td>
+                                                    </tr>
+
+                                                                    
+                                                )
+                                                //return <TicketCard key={id} func={buyTicket} id={id} ticketCount={ticketCount} price={price} date={hexToString(date)} name={hexToString(name)} location={hexToString(location)} description={hexToString(description)} isActive={isActive} />
+                                            })
+                                        }
+                                    </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         );

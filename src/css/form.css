@@ -38,9 +38,9 @@ h2.heading {
 
 .controls {
   text-align: left;
-  position: relative;
 }
 .controls input[type="text"],
+.controls input[type="time"],
 .controls input[type="email"],
 .controls input[type="number"],
 .controls input[type="date"],
@@ -67,6 +67,8 @@ h2.heading {
 }
 .controls input[type="text"]:focus, .controls input[type="text"]:hover,
 .controls input[type="email"]:focus,
+.controls input[type="time"]:focus,
+.controls input[type="time"]:hover,
 .controls input[type="email"]:hover,
 .controls input[type="number"]:focus,
 .controls input[type="number"]:hover,

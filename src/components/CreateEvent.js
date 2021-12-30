@@ -12,6 +12,7 @@ class CreateEvent extends Component {
             description: '',
             category: '',
             ticketCount: 0,
+            time: '',
             price: 0,
         }
     }
@@ -23,7 +24,7 @@ class CreateEvent extends Component {
     }
 
     handleSubmit = (event) => {
-        this.props.createEvent(this.state.ticketCount, this.state.price, this.state.date, this.state.title, this.state.location, this.state.city, this.state.description, this.state.category, true);
+        this.props.createEvent(this.state.ticketCount, this.state.price, this.state.date, this.state.title, this.state.location, this.state.city, this.state.description, this.state.category, this.state.time, true);
         event.preventDefault();
     }
 
@@ -36,9 +37,16 @@ class CreateEvent extends Component {
                         <div class="controls">
                             <input type="text" name="title" class="floatLabel" placeholder='Title' onChange={this.handleForm}/>
                         </div>
+                        <div className='col-lg-6'>
                             <div class="controls">
                                 <input type="date" name="date" class="floatLabel" onChange={this.handleForm}/>
                             </div> 
+                        </div>
+                        <div className='col-lg-6' style={{padding: "0"}}>
+                            <div class="controls">
+                                <input type="time" name="time" class="floatLabel" onChange={this.handleForm}/>
+                            </div> 
+                        </div>
                         <div class="controls">
                             <i class="fa fa-sort"></i>
                             <select class="floatLabel" name='category' onChange={this.handleForm}>

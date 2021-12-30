@@ -107,12 +107,13 @@ class App extends Component {
       city,
       description,
       category,
+      time,
       isActive
     ) {
       try{
         console.log(ticketCount, price,datee,name, location, description, isActive, category);
         const priceWei = this.state.web3.utils.toWei(price.toString(), "ether");
-        await this.state.ticket.methods.CreateEvent(ticketCount, priceWei, this.stringToHex(datee), this.stringToHex(name), this.stringToHex(location), this.stringToHex(city), this.stringToHex(description), this.stringToHex(category), isActive).send({from: this.state.account, gas:3000000});
+        await this.state.ticket.methods.CreateEvent(ticketCount, priceWei, this.stringToHex(datee), this.stringToHex(name), this.stringToHex(location), this.stringToHex(city), this.stringToHex(description), this.stringToHex(category), this.stringToHex(time), isActive).send({from: this.state.account, gas:3000000});
         this.rerender();
       }
       catch(e) {
@@ -130,12 +131,13 @@ class App extends Component {
       city,
       description,
       category,
+      time,
       isActive
     ) {
       try{
         console.log(ticketCount, price,datee,name, location, description, isActive, category);
         const priceWei = this.state.web3.utils.toWei(price.toString(), "ether");
-        await this.state.ticket.methods.EditEvent(id, ticketCount, priceWei, this.stringToHex(datee), this.stringToHex(name), this.stringToHex(location), this.stringToHex(city), this.stringToHex(description), this.stringToHex(category), isActive).send({from: this.state.account, gas:3000000});
+        await this.state.ticket.methods.EditEvent(id, ticketCount, priceWei, this.stringToHex(datee), this.stringToHex(name), this.stringToHex(location), this.stringToHex(city), this.stringToHex(description), this.stringToHex(category), this.stringToHex(time), isActive).send({from: this.state.account, gas:3000000});
         this.rerender();
       }
       catch(e) {
@@ -154,7 +156,9 @@ class App extends Component {
 
   async buyTicket(id, amount){
     try {
-      await this.state.ticket.methods.BuyTicket(id).send({from: this.state.account, value: amount});
+      let today = new Date();
+      let datetime = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate() + " " + today.getHours() + ':' + today.getMinutes();
+      await this.state.ticket.methods.BuyTicket(id, this.stringToHex(datetime)).send({from: this.state.account, value: amount});
       this.rerender();
     } catch (e) {
       console.log('error: buy ticket ->', e);
@@ -240,12 +244,12 @@ class App extends Component {
           <Navbar account={this.state.account} loadData={this.loadBlockchainData} render={this.rerender} isOwner={this.state.isowner} />
           <Switch>
             <Route path="/myevents" >
-              <MyTickets events={myevents} buyTicket={this.buyTicket} hexToString={this.hexToString} />
+              <MyTickets events={myevents} buyTicket={this.buyTicket} hexToString={this.hexToString} contract={this.state.ticket} />
             </Route>
             <Route path="/create-event">
               <CreateEvent createEvent={this.createEvent} />
             </Route>
-            <Route path="/edit-event/:id" render={(props) => (<EditEvents {...props} editEvent={this.editEvent} />)} />
+            <Route path="/edit-event/:id" render={(props) => (<EditEvents {...props} editEvent={this.editEvent} findEvent={this.findEvent} hexToString={this.hexToString} />)} />
             <Route path="/admin-settings">
               <AdminSettings owners={this.state.owners} addOwner={this.addOwner} deleteOwner={this.deleteOwner} />
             </Route>

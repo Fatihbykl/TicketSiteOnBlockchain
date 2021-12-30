@@ -32,7 +32,7 @@ class AdminSettings extends Component {
     changezIndex(id) {
         let array = ['owners', 'owner', 'event']
         for (let index = 0; index < array.length; index++) {
-            if (array[index] == id) {
+            if (array[index] === id) {
                 document.getElementById(id).style.zIndex = 1;
             }else{
                 document.getElementById(array[index]).style.zIndex = 0;

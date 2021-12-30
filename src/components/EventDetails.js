@@ -15,16 +15,16 @@ class EventDetails extends Component {
         let result = this.props.findEvent(id);
         if(typeof result === "undefined") return;
         Promise.resolve(result).then(r => {
-            console.log(r[1]);
             this.ticketCount = r[1];
             this.price = web3.utils.fromWei(r[2].toString(), 'ether');
             this.priceWei = r[2];
             this.date = this.props.hexToString(r[3]);
             this.name = this.props.hexToString(r[4]);
-            this.location = this.props.hexToString(r[5]);
-            this.city = this.props.hexToString(r[6]);
-            this.category = this.props.hexToString(r[7]);
-            this.description = this.props.hexToString(r[8]);
+            this.location = this.props.hexToString(r[8]);
+            this.city = this.props.hexToString(r[5]);
+            this.category = this.props.hexToString(r[6]);
+            this.time = this.props.hexToString(r[7]);
+            this.description = this.props.hexToString(r[9]);
         })
     }
     render() {
@@ -44,7 +44,7 @@ class EventDetails extends Component {
                         <div className="col-md-6">
                             <FaTicketAlt className="icon" /> {this.ticketCount} Tickets left <br />
                             <FaThList className="icon" /> {this.category} <br />
-                            <IoCalendarSharp className="icon" /> {this.date} <br />
+                            <IoCalendarSharp className="icon" /> {this.date} - {this.time} <br />
                             <IoLocationSharp className="icon" /> {this.location} - {this.city} <br />
                             <FaEthereum className="icon" /> {this.price} <br />
                         </div>
