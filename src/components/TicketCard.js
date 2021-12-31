@@ -1,25 +1,41 @@
 import React, {Component} from 'react';
 import { Link } from 'react-router-dom';
 import '../css/ticket.css';
-import { FaEthereum, FaThList } from 'react-icons/fa'
-import { IoLocationSharp, IoCalendarSharp, IoTicketSharp } from 'react-icons/io5'
+import { FaEthereum, FaThList } from 'react-icons/fa';
+import { IoLocationSharp, IoCalendarSharp, IoTicketSharp } from 'react-icons/io5';
+import concert from '../media/Concert.jpg';
+import theatre from '../media/Theatre.jpg';
+import sports from '../media/Sports.jpg';
 
 class TicketCard extends Component {
     render() {
         const web3 = require('web3');
         const {func, id, ticketCount, price, date, name, location, city, description, category, isActive} = this.props;
         const link = '/event-details/' + id;
+        let img;
+        if (category === "Concert") {
+            img = concert;
+        }else if (category === "Theatre") {
+            img = theatre;
+        }else {
+            img = sports;
+        }
         return(
             <div className="col-lg-4 col-md-6">
                 <div class="ticket-card">
                     <div class="cover">
-                    <img src="https://imgr.search.brave.com/2LFQq2vtO7iKUTSvjsH9bQekwy8GoP4DJoHhKdlaPqs/fit/1024/683/ce/1/aHR0cHM6Ly9iaXpi/b2x0cy5jby56YS93/cC1jb250ZW50L3Vw/bG9hZHMvMjAyMS8w/MS9FbnRyZXByZW5l/dXJzaGlwLU9wcG9y/dHVuaXRpZXMtQXQt/QS1NdXNpYy1Db25j/ZXJ0LmpwZw" alt="" />
+                    <img src={img} alt="" />
                     <div class="info">
                         <div class="going">
                         <FaThList /> {category}
                         </div>
                         <div class="tickets-left">
-                        <i class="fa fa-ticket"></i><IoTicketSharp /> {ticketCount} Bilet kaldı
+                        <IoTicketSharp /> 
+                        {
+                            ticketCount > 0
+                            ? ticketCount + " Tickets Left"
+                            : <span class="badge bg-danger ms-1">SOLD OUT</span>
+                        }
                         </div>
                     </div>
                     </div>

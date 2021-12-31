@@ -1,10 +1,14 @@
 import React, { Component } from "react";
 import '../css/mytickets.css';
+import concert from '../media/Concert.jpg';
+import theatre from '../media/Theatre.jpg';
+import sports from '../media/Sports.jpg';
 
 class MyTickets extends Component {
     render() {
         const web3 = require('web3');
         const {events, buyTicket, hexToString, contract} = this.props;
+        let img;
         return(
             <div className="container">
                 <h2 class="heading">My Tickets</h2>
@@ -25,7 +29,7 @@ class MyTickets extends Component {
                                                 <th class="table-price-col">Info</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
+                                        <tbody id="tickets">
                                         {
                                             events.map((event, index) => {
                                                 var [id, date, name, location, category, time, price, isActive] = [null, null, null, null, null, null, null, null];
@@ -37,14 +41,17 @@ class MyTickets extends Component {
                                                 location = event['5'];
                                                 category = hexToString(event['6']);
                                                 isActive = event['10'];
+                                                if (category === "Concert") { img = concert; }
+                                                else if (category === "Theatre") { img = theatre; }
+                                                else { img = sports; }
                                                 return (
                                                     
                                                     <tr>
                                                         <td class="table-checkbox-col">
                                                             <span style={{fontSize: "16px"}}>{index + 1}</span>
                                                         </td>
-                                                        <td class="table-image-col">
-                                                            <img src="https://picsum.photos/80/80" alt="" class="table-image" />
+                                                        <td class="table-image-col p-2">
+                                                            <img src={img} alt="" class="table-image" />
                                                         </td>
                                                         <td class="table-name-col">{hexToString(name)}</td>
                                                         <td class="table-brand-col">{date} - {time}</td>

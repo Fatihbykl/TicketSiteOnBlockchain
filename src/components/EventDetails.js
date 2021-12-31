@@ -42,7 +42,13 @@ class EventDetails extends Component {
                             </p>
                         </div>
                         <div className="col-md-6">
-                            <FaTicketAlt className="icon" /> {this.ticketCount} Tickets left <br />
+                            <FaTicketAlt className="icon" />
+                            {
+                                this.ticketCount > 0
+                                ? this.ticketCount + " Tickets Left"
+                                : <span class="badge bg-danger ms-1">SOLD OUT</span>
+                            }
+                             <br />
                             <FaThList className="icon" /> {this.category} <br />
                             <IoCalendarSharp className="icon" /> {this.date} - {this.time} <br />
                             <IoLocationSharp className="icon" /> {this.location} - {this.city} <br />

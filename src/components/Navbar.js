@@ -21,12 +21,20 @@ class Navbar extends Component {
                     <img src="./logo512.png" width="30" height="30" className="d-inline-block align-top" alt="" />
                     Bootstrap
                     <div class="float-end">
-                        <NavLink className="a-link me-3" activeClassName="a-selected" exact to="/"><IoHome className='mb-1 me-1'/>Homepage</NavLink>
-                        <NavLink className="a-link me-3" activeClassName="a-selected" to="/myevents"><IoTicketSharp className='mb-1 me-1'/>My Tickets</NavLink>
-                        <NavLink className="a-link me-3" activeClassName="a-selected" to="/create-event"><AiOutlinePlusCircle className='mb-1 me-1'/>Create Event</NavLink>
+                        {
+                            account
+                            ? <span>
+                                <NavLink className="a-link me-3" activeClassName="a-selected" exact to="/"><IoHome className='mb-1 me-1'/>Homepage</NavLink>
+                                <NavLink className="a-link me-3" activeClassName="a-selected" to="/myevents"><IoTicketSharp className='mb-1 me-1'/>My Tickets</NavLink>
+                            </span>
+                            : null
+                        }
                         {
                             isOwner
-                            ? <NavLink className="a-link me-3" activeClassName="a-selected" to="/admin-settings#owner"><IoMdSettings className='mb-1 me-1'/>Admin Settings</NavLink>
+                            ? <span>
+                                <NavLink className="a-link me-3" activeClassName="a-selected" to="/admin-settings#owner"><IoMdSettings className='mb-1 me-1'/>Admin Settings</NavLink>
+                                <NavLink className="a-link me-3" activeClassName="a-selected" to="/create-event"><AiOutlinePlusCircle className='mb-1 me-1'/>Create Event</NavLink>
+                            </span>
                             : null
                         }
                         {

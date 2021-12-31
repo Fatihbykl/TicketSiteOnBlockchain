@@ -24,10 +24,6 @@
     padding-bottom: 10px;
   }
   
-  .my-products-product-table tbody tr {
-    background-color: #ffffff;
-  }
-  
   .my-products-product-table tbody tr.active-row {
     background-color: #fbf9f8;
   }
@@ -134,3 +130,7 @@
     background-position: center;
     background-size: 18px 18px;
   }
+
+#tickets tr:nth-child(odd){background-color: #f2f2f2;}
+  
+#tickets tr:hover {background-color: #ddd;}
