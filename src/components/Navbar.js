@@ -18,8 +18,8 @@ class Navbar extends Component {
         return(
             <nav className="navbar navbar-light bg-light">
                 <div className="navbar-brand container containerNavbar">
-                    <img src="./logo512.png" width="30" height="30" className="d-inline-block align-top" alt="" />
-                    Bootstrap
+                    <IoTicketSharp className='me-2' style={{fontSize: "30px", color:"#0869ae"}} />
+                    <span style={{fontSize: "24px", fontWeight:"bold"}}>ticket</span><span style={{color:"#0869ae", fontSize:"16px", fontWeight:"bold"}}> ETH</span>
                     <div class="float-end">
                         {
                             account

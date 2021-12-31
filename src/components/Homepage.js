@@ -1,13 +1,25 @@
 import React, {Component} from 'react';
-import TicketCard from './TicketCard'
+import TicketCard from './TicketCard';
+import metamask from '../media/metamask.png';
 
 
 class Homepage extends Component {
     render() {
-        const {events, buyTicket, hexToString} = this.props;
+        const {events, buyTicket, hexToString, account} = this.props;
         return(
             <div className="container">
                 <div className="row">
+                    {
+                        !account
+                        ? 
+                        <div className='text-center'>
+                            <img src={metamask} width="350px"/>
+                            <p style={{fontSize: "24px", fontWeight: "bold"}}>
+                                Please connect your metamask wallet.
+                            </p>
+                        </div>
+                        : null
+                    }
                     {
                         events.map(event => {
                             const {id, ticketCount, price, date, name, location, city, description, category, isActive} = event;

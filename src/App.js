@@ -255,7 +255,7 @@ class App extends Component {
             </Route>
             <Route path="/event-details/:id" render={(props) => (<EventDetails {...props} findEvent={this.findEvent} hexToString={this.hexToString} buyTicket={this.buyTicket} />)} />
             <Route path="/" >
-              <Homepage events={events} hexToString={this.hexToString} buyTicket={this.buyTicket} />
+              <Homepage events={events} hexToString={this.hexToString} buyTicket={this.buyTicket} account={this.state.account} />
             </Route>
           </Switch>
         </Router>
