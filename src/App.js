@@ -58,10 +58,10 @@ class App extends Component {
 
   async loadBlockchainData(dispatch) {
     if(typeof window.ethereum!=='undefined'){
-      let web3 = new Web3(window.ethereum)
+      let web3 = new Web3(window.ethereum);
       window.ethereum.enable();
-      const netId = await web3.eth.net.getId()
-      const accounts = await web3.eth.getAccounts()
+      const netId = await web3.eth.net.getId();
+      const accounts = await web3.eth.getAccounts();
       //load balance
       if(typeof accounts[0] !=='undefined'){
         //const balance = await web3.eth.getBalance(accounts[0])

@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
 import '../css/eventdetails.css';
 import '../App.css';
+import concert from '../media/Concert.jpg';
+import theatre from '../media/Theatre.jpg';
+import sports from '../media/Sports.jpg';
 import { FaTicketAlt, FaThList, FaEthereum } from 'react-icons/fa';
 import { IoCalendarSharp, IoLocationSharp } from 'react-icons/io5';
 
@@ -29,10 +32,14 @@ class EventDetails extends Component {
     }
     render() {
         this.findEvent(this.id);
+        let img;
+        if (this.category === "Concert") { img = concert; }
+        else if (this.category === "Theatre") { img = theatre; }
+        else { img = sports; }
         return(
             <div class="container">
                 <div className='bg-white bg-div'>
-                    <img src='https://imgr.search.brave.com/2LFQq2vtO7iKUTSvjsH9bQekwy8GoP4DJoHhKdlaPqs/fit/1024/683/ce/1/aHR0cHM6Ly9iaXpi/b2x0cy5jby56YS93/cC1jb250ZW50L3Vw/bG9hZHMvMjAyMS8w/MS9FbnRyZXByZW5l/dXJzaGlwLU9wcG9y/dHVuaXRpZXMtQXQt/QS1NdXNpYy1Db25j/ZXJ0LmpwZw'/>
+                    <img src={img}/>
                     <hr />
                     <div className="row event-details">
                         <div className="col-md-6">
