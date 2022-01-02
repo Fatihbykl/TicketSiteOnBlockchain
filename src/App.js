@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import Web3 from 'web3';
 import Ticket from "./abis/Ticket.json";
 import './App.css';
@@ -242,22 +242,22 @@ class App extends Component {
     return (
         <Router>
           <Navbar account={this.state.account} loadData={this.loadBlockchainData} render={this.rerender} isOwner={this.state.isowner} />
-          <Switch>
-            <Route path="/myevents" >
-              <MyTickets events={myevents} buyTicket={this.buyTicket} hexToString={this.hexToString} contract={this.state.ticket} />
+          <Routes>
+            <Route path="myevents" element={<MyTickets events={myevents} buyTicket={this.buyTicket} hexToString={this.hexToString} contract={this.state.ticket} />}>
+              
             </Route>
-            <Route path="/create-event">
-              <CreateEvent createEvent={this.createEvent} />
+            <Route path="create-event" element={<CreateEvent createEvent={this.createEvent} />}>
+              
             </Route>
-            <Route path="/edit-event/:id" render={(props) => (<EditEvents {...props} editEvent={this.editEvent} findEvent={this.findEvent} hexToString={this.hexToString} />)} />
-            <Route path="/admin-settings">
-              <AdminSettings owners={this.state.owners} addOwner={this.addOwner} deleteOwner={this.deleteOwner} />
+            <Route path="edit-event/:id" render={(props) => (<EditEvents {...props} editEvent={this.editEvent} findEvent={this.findEvent} hexToString={this.hexToString} />)} />
+            <Route path="admin-settings" element={<AdminSettings owners={this.state.owners} addOwner={this.addOwner} deleteOwner={this.deleteOwner} />}>
+              
             </Route>
-            <Route path="/event-details/:id" render={(props) => (<EventDetails {...props} findEvent={this.findEvent} hexToString={this.hexToString} buyTicket={this.buyTicket} />)} />
-            <Route path="/" >
-              <Homepage events={events} hexToString={this.hexToString} buyTicket={this.buyTicket} account={this.state.account} />
+            <Route path="event-details/:id" render={(props) => (<EventDetails {...props} findEvent={this.findEvent} hexToString={this.hexToString} buyTicket={this.buyTicket} />)} />
+            <Route path="/" element={<Homepage events={events} hexToString={this.hexToString} buyTicket={this.buyTicket} account={this.state.account} />}>
+              
             </Route>
-          </Switch>
+          </Routes>
         </Router>
     );
   }
